@@ -3,6 +3,7 @@ package org.example.jpa.service;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.example.jpa.dao.entity.StudentEntity;
+import org.example.jpa.dao.repository.AddressRepository;
 import org.example.jpa.dao.repository.StudenRepository;
 import org.example.jpa.exception.NotFoundException;
 import org.example.jpa.mapper.Studentmapper;
@@ -17,9 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class StudentService {
     private final StudenRepository studenRepository;
-
+  private  final AddressService addressService;
     public void createStudent(StudenDto studenDto) {
         StudentEntity studentEntity= Studentmapper.toStudentEntity(studenDto);
+        addressService.createAddress(studenDto.getAddress());
         studenRepository.save(studentEntity);
     }
     public  StudenDto getStudentById(Long id){
